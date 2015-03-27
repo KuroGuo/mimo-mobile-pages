@@ -1,0 +1,29 @@
+@import "compass/reset";
+@import "compass/css3";
+@import "./common.scss";
+
+html {
+  font-size: 100px;
+}
+
+body {
+  font-family: $font-stack;
+  color: #2c2c2c;
+  font-size: .16rem;
+  @include perspective(.1111rem);
+}
+
+html, body {
+  overflow: hidden;
+  height: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: #258fb8;
+  outline: none;
+}
+
+img {
+  vertical-align: bottom;
+}

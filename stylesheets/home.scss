@@ -1,0 +1,143 @@
+@import "compass/css3";
+@import "./partials/common.scss";
+
+.cover {
+  .background {
+    @include backface-visibility(hidden);
+    @include animation(fade-in 1s 3s both);
+  }
+
+  .text {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 8%;
+    bottom: 50%;
+    margin: auto;
+    -webkit-transform-origin: center top;
+    -moz-transform-origin: center top;
+    -ms-transform-origin: center top;
+    transform-origin: center top;
+    @include backface-visibility(hidden);
+    @include animation(cover-text-to-top .6s 1.2s both);
+
+    .text-title, .text-content {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      margin: auto;
+      height: 100%;
+    }
+
+    .text-title {
+      @include backface-visibility(hidden);
+      @include animation(fade-in 1s both, cover-text-title-to-right .6s 1.8s both);
+    }
+
+    .text-content {
+      @include backface-visibility(hidden);
+      @include transform(translateX(-38%));
+      @include animation(fade-in .6s 2.4s both);
+    }
+  }
+}
+
+.menu {
+  text-align: center;
+  background-color: #f6f4eb;
+
+  .top {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 8%;
+    height: 35%;
+
+    h2 {
+      > span {
+        font-size: .40rem;
+        padding: 0 0 .10rem 0;
+        color: $mimo-red;
+        border-bottom: 1px solid $mimo-red;
+        display: inline-block;
+      }
+    }
+
+    p {
+      margin: 1.6em 0;
+    }
+
+    .btn-make {
+      display: inline-block;
+      padding: 1em 0;
+      width: 62%;
+      background-color: $mimo-red;
+      color: white;
+      border-radius: .4em;
+    }
+  }
+
+  .bottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 8%;
+    height: 35%;
+
+    > * {
+      position: absolute;
+      width: 50%;
+      height: 50%;
+      background-repeat: no-repeat;
+      background-position: center bottom;
+      background-size: cover;
+
+      > .text {
+        position: absolute;
+        background-color: rgba(255, 255, 255, .6);
+        color: $mimo-red;
+        padding: .6em 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        text-align: center;
+      }
+    }
+
+    .hard-cover {
+      left: 0;
+      top: 0;
+    }
+    .soft-cover {
+      right: 0;
+      top: 0;
+    }
+    .make-step {
+      left: 0;
+      bottom: 0;
+    }
+    .price {
+      right: 0;
+      bottom: 0;
+    }
+  }
+}
+
+@include keyframes(cover-text-to-top) {
+  from {
+    @include transform(scale(2));
+  }
+  to {
+    @include transform(scale(1.1));
+  }
+}
+
+@include keyframes(cover-text-title-to-right) {
+  from {
+    @include transform(translateX(0));
+  }
+  to {
+    @include transform(translateX(93%));
+  }
+}

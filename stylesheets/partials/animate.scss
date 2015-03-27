@@ -1,0 +1,29 @@
+@import "compass/css3";
+@import "compass/css3/animation";
+
+@include keyframes(fade-in) {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@include keyframes(fade-out) {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@include keyframes(from-top) {
+  from {
+    @include transform(translateY(-10px));
+  }
+  to {
+    @include transform(translateY(0));
+  }
+}
