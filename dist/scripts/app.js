@@ -7,10 +7,46 @@ var SliderVue = Vue.extend({
       count: 0
     }
   },
+  ready: function () {
+    var vue = this
+    var el = vue.$el
+
+    vue.$broadcast('ready')
+
+    kDrag.bind(el)
+
+    el.addEventListener('touchstart', function (e) {
+      vue.onTouchstart(e)
+    })
+    el.addEventListener('k.drag', function (e) {
+      vue.onDrag(e)
+    })
+    el.addEventListener('k.dragend', function (e) {
+      vue.onDragend(e)
+    })
+    el.addEventListener('touchend', function (e) {
+      vue.onTouchend(e)
+    })
+
+    vue.resize()
+
+    window.addEventListener('resize', function () {
+      vue.resize()
+    })
+
+    vue.$broadcast('scrollByIndex', vue.current, 0)
+  },
   computed: {
     current: {
       get: function () {
-        return Math.floor(this.scrollTop / this.height) + 1 || 1
+        var value = Math.floor(this.scrollTop / this.height) + 1 || 1
+
+        if (value < 1)
+          value = 1
+        else if (value > this.count)
+          value = this.count
+
+        return value
       },
       set: function (value) {
         if (!value)
@@ -22,14 +58,6 @@ var SliderVue = Vue.extend({
       return this.height * (this.count - 1)
     }
   },
-  watch: {
-    scrollTop: function (value) {
-      if (value > this.maxScroll)
-        this.scrollTop = this.maxScroll
-      else if (value < 0)
-        this.scrollTop = 0
-    }
-  },
   replace: true,
   events: {
     sectionCreated: function () {
@@ -37,68 +65,51 @@ var SliderVue = Vue.extend({
     }
   },
   methods: {
-    ready: function () {
-      var vue = this
-      var el = vue.$el
-
-      vue.$broadcast('ready')
-
-      kDrag.bind(el)
-
-      el.addEventListener('touchstart', function (e) {
-        vue.onTouchstart(e)
-      })
-      el.addEventListener('k.drag', function (e) {
-        vue.onDrag(e)
-      })
-      el.addEventListener('k.dragend', function (e) {
-        vue.onDragend(e)
-      })
-      el.addEventListener('touchend', function (e) {
-        vue.onTouchend(e)
-      })
-
-      vue.resize()
-
-      window.addEventListener('resize', function () {
-        vue.resize()
-      })
-    },
     onTouchstart: function (e) {
-      this.v = 0
-      this.$broadcast('stopAnimation')
+      var vue = this
+      vue.v = 0
+      vue.$broadcast('stopAnimation')
     },
     onDrag: function (e) {
       var vue = this
-      vue.scrollTop -= e.stepY
+
+      var stepY = e.stepY
+
+      if (vue.scrollTop > vue.maxScroll && stepY < 0)
+        stepY = stepY / (vue.scrollTop - stepY - vue.maxScroll) * 10
+      else if (vue.scrollTop < 0 && stepY > 0)
+        stepY = stepY / -(vue.scrollTop - stepY) * 10
+
+      vue.scrollTop -= stepY
     },
     onDragend: function (e) {
       this.v = e.vy
     },
     onTouchend: function (e) {
       var v = this.v
+      var absV = Math.abs(v)
 
-      if (Math.abs(v) > 0.3) {
+      var duration
+
+      if (Math.abs(absV) > 0.5) {
+        duration = Math.max(400 / absV, 260)
         if (v > 0)
-          this.$broadcast('scrollByIndex', this.current)
+          this.$broadcast('scrollByIndex', this.current, duration)
         else
-          this.$broadcast('scrollByIndex', this.current + 1)
+          this.$broadcast('scrollByIndex', this.current + 1, duration)
       } else {
+        duration = 400
         if (this.scrollTop - this.height * (this.current - 1) > this.height / 2) {
-          this.$broadcast('scrollByIndex', this.current + 1)
+          this.$broadcast('scrollByIndex', this.current + 1, duration)
         } else {
-          this.$broadcast('scrollByIndex', this.current)
+          this.$broadcast('scrollByIndex', this.current, duration)
         }
       }
     },
     resize: function () {
+      var current = this.current
       this.height = this.$el.clientHeight
-
-      if (this.scrollTop - this.height * (this.current - 1) > this.height / 2) {
-        this.$broadcast('scrollByIndex', this.current + 1)
-      } else {
-        this.$broadcast('scrollByIndex', this.current)
-      }
+      this.scrollTop = this.height * (current - 1)
     }
   }
 })
@@ -114,7 +125,8 @@ var SectionVue = Vue.extend({
     this.index = parseFloat(this.index)
   },
   ready: function () {
-    this.$emit('refreshDisplay')
+    if (document.documentElement.style.perspective !== undefined)
+      Velocity.hook(this.$el, 'translateZ', '.000001px')
   },
   watch: {
     scrollTop: function (value) {
@@ -126,41 +138,19 @@ var SectionVue = Vue.extend({
       if (!style)
         return
 
-      if (document.documentElement.style.perspective !== undefined)
-        Velocity.hook(el, 'translateZ', '.000001px')
-      Velocity.hook(el, 'translateY', style.translateY)
-    },
-    current: function (value) {
-      if (!value)
-        return
-
-      this.$emit('refreshDisplay')
+      vue.setStyle(style)
     }
   },
   events: {
-    refreshDisplay: function () {
-      var vue = this
-      var el = vue.$el
+    scrollByIndex: function (index, duration) {
+      duration = duration || 400
 
-      // if (vue.index !== vue.current - 1 && vue.index !== vue.current && vue.index !== vue.current + 1) {
-      //   if (this.index === 1)
-      //     el.style.visibility = 'hidden'
-      //   else
-      //     // el.style.display = 'none'
-      //     el.style.visibility = 'hidden'
-      // } else {
-      //   if (this.index === 1)
-      //     el.style.visibility = 'visible'
-      //   else
-      //     // el.style.display = 'block'
-      //     el.style.visibility = 'visible'
-      // }
-    },
-    scrollByIndex: function (index) {
       var vue = this
 
       if (index > vue.count)
-        return
+        index = vue.count
+      else if (index < 1)
+        index = 1
 
       var el = vue.$el
 
@@ -173,16 +163,17 @@ var SectionVue = Vue.extend({
 
       vue.$emit('stopAnimation')
 
-      if (document.documentElement.style.perspective !== undefined)
-        style.translateZ = '.000001px'
-
-      Velocity(el, style, {
-        duration: 260,
-        easing: 'ease-out',
-        complete: function () {
-          vue.scrollTop = scrollTop
-        }
-      })
+      if (duration === 0) {
+        vue.setStyle(style)
+      } else {
+        Velocity(el, style, {
+          duration: duration,
+          easing: 'ease-out',
+          complete: function () {
+            vue.scrollTop = scrollTop
+          }
+        })
+      }
     },
     stopAnimation: function () {
       var vue = this
@@ -202,22 +193,30 @@ var SectionVue = Vue.extend({
 
       if (vue.index === vue.current) {
         return {
-          translateY: sectionTranslateY + 'px',
+          translateY: sectionTranslateY + 'px'
         }
       }
       else if (vue.index === vue.current - 1) {
         return {
-          translateY: (sectionTranslateY - vue.height - (sectionTranslateY) / 1.618) + 'px',
+          translateY: (sectionTranslateY - vue.height - sectionTranslateY / 1.618) + 'px'
         }
       }
       else if (vue.index === vue.current + 1) {
         return {
-          translateY: (sectionTranslateY + vue.height - (sectionTranslateY + vue.height) / 1.618) + 'px',
+          translateY: (sectionTranslateY + vue.height - (sectionTranslateY + vue.height) / 1.618) + 'px'
         }
       } else {
         return {
-          translateY: vue.height * 2
+          translateY: -vue.height * 1.1
         }
+      }
+    },
+    setStyle: function (style) {
+      var vue = this
+      var el = vue.$el
+
+      for (var name in style) {
+        Velocity.hook(el, name, style[name])
       }
     }
   },
@@ -243,12 +242,29 @@ var HomeSliderVue = SliderVue.extend({
   ready: function () {
     var vue = this
     setTimeout(function () {
-      vue.ready()  
+      vue.$broadcast('animationend')
     }, 4000)
   },
   components: {
     cover: SectionVue.extend({
-      template: '#template_cover'
+      template: '#template_cover',
+      ready: function () {
+        var vue = this
+        var el = vue.$el
+
+        el.addEventListener('touchstart', vue.preventTouch)
+      },
+      events: {
+        animationend: function () {
+          this.$el.removeEventListener('touchstart', this.preventTouch)
+        }
+      },
+      methods: {
+        preventTouch: function (e) {
+          e.stopPropagation()
+          e.preventDefault()
+        }
+      }
     }),
     menu: SectionVue.extend({
       template: '#template_menu',
@@ -256,7 +272,7 @@ var HomeSliderVue = SliderVue.extend({
         this.$el.style.display = 'none'
       },
       events: {
-        ready: function () {
+        animationend: function () {
           this.$el.style.display = 'block'
         }
       }
@@ -266,9 +282,6 @@ var HomeSliderVue = SliderVue.extend({
 
 var HardCoverSliderVue = SliderVue.extend({
   template: '#template_hard_cover',
-  ready: function () {
-    this.ready()
-  },
   components: {
     section1: SectionVue.extend({
       template: '#template_hard_cover_section_1'
