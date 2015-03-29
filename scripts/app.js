@@ -143,7 +143,8 @@ var SectionVue = Vue.extend({
   },
   events: {
     scrollByIndex: function (index, duration) {
-      duration = duration || 400
+      if (duration === undefined)
+        duration = 400
 
       var vue = this
 
@@ -207,7 +208,7 @@ var SectionVue = Vue.extend({
         }
       } else {
         return {
-          translateY: -vue.height * 1.1
+          translateY: -vue.height * 1.1 + 'px'
         }
       }
     },
@@ -229,7 +230,7 @@ var AppSectionVue = SectionVue.extend({
       replace: true,
       methods: {
         returnToHome: function () {
-          this.$dispatch('open', 'home')
+          this.$dispatch('open', 'index')
         }
       }
     }
@@ -240,9 +241,21 @@ var HomeSliderVue = SliderVue.extend({
   template: '#template_home',
   ready: function () {
     var vue = this
+    var el = vue.$el
+
     setTimeout(function () {
-      vue.$broadcast('animationend')
+      vue.$broadcast('unlock')
     }, 4000)
+
+    if (window.location.hash === '#menu') {
+      vue.$broadcast('unlock')
+      vue.$broadcast('scrollByIndex', 2, 0)
+    } else {
+      setTimeout(function () {
+        vue.$broadcast('unlock')
+      }, 4000)
+    }
+
   },
   components: {
     cover: SectionVue.extend({
@@ -254,7 +267,7 @@ var HomeSliderVue = SliderVue.extend({
         el.addEventListener('touchstart', vue.preventTouch)
       },
       events: {
-        animationend: function () {
+        unlock: function () {
           this.$el.removeEventListener('touchstart', this.preventTouch)
         }
       },
@@ -262,6 +275,12 @@ var HomeSliderVue = SliderVue.extend({
         preventTouch: function (e) {
           e.stopPropagation()
           e.preventDefault()
+        }
+      },
+      watch: {
+        current: function (value) {
+          if (value === this.index)
+            window.location.hash = '#cover'
         }
       }
     }),
@@ -271,13 +290,19 @@ var HomeSliderVue = SliderVue.extend({
         this.$el.style.display = 'none'
       },
       events: {
-        animationend: function () {
+        unlock: function () {
           this.$el.style.display = 'block'
         }
       },
       methods: {
         open: function (name) {
           this.$dispatch('open', name)
+        }
+      },
+      watch: {
+        current: function (value) {
+          if (value === this.index)
+            window.location.hash = '#menu'
         }
       }
     })
@@ -358,28 +383,9 @@ var SoftCoverSliderVue = SliderVue.extend({
 
 var app = new Vue({
   el: document.documentElement,
-  data: {
-    currentVue: 'home'
-  },
-  watch: {
-    currentVue: function () {
-      this.$broadcast('resize')
-    }
-  },
   ready: function () {
     var vue = this
     var el = vue.$el
-
-    // var touchstartX, touchstartY
-
-    // el.addEventListener('touchstart', function (e) {
-    //   touchstartX
-    // })
-
-    // el.addEventListener('touchmove', function (e) {
-    //   console.log(e)
-    //   e.stopPropagation()
-    // }, true)
   },
   components: {
     home: HomeSliderVue,
@@ -405,7 +411,10 @@ var app = new Vue({
   },
   events: {
     open: function (name) {
-      this.currentVue = name
+      var location = './' + name + '.html'
+      if (name === 'index')
+        location += '#menu'
+      window.location = location
     }
   }
 })
