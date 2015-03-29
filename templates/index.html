@@ -5,16 +5,27 @@
   <title>微信书</title>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
   <link rel="stylesheet" href="stylesheets/app.css">
+  <link rel="stylesheet" href="stylesheets/home.css">
   <script>
-    document.documentElement.style.fontSize = (document.documentElement.clientWidth / 414 * 100) + 'px'
-    document.addEventListener('touchmove', function (e) {
-      e.preventDefault()
-    }, true)
+    (function () {
+      var setFontSize = function () {
+        document.documentElement.style.fontSize = (window.innerWidth / 414 * 100) + 'px'
+      }
+
+      setFontSize()
+      window.addEventListener('resize', setFontSize)
+      window.addEventListener('load', setFontSize)
+
+      document.addEventListener('touchstart', function (e) {
+        e.preventDefault()
+      }, true)
+    })()
   </script>
 </head>
 <body>
+  <div id="home" v-component="home"></div>
+  <div id="soft_cover" v-component="soft-cover"></div>
   <div id="hard_cover" v-component="hard-cover"></div>
-  <!-- <div id="home" v-component="home"></div> -->
 
   <script id="template_home" type="text/x-template">
     <div class="slider">
@@ -27,6 +38,17 @@
     <div class="slider">
       <div v-component="section8" index="8"></div>
       <div v-component="section7" index="7"></div>
+      <div v-component="section6" index="6"></div>
+      <div v-component="section5" index="5"></div>
+      <div v-component="section4" index="4"></div>
+      <div v-component="section3" index="3"></div>
+      <div v-component="section2" index="2"></div>
+      <div v-component="section1" index="1"></div>
+    </div>
+  </script>
+
+  <script id="template_soft_cover" type="text/x-template">
+    <div class="slider">
       <div v-component="section6" index="6"></div>
       <div v-component="section5" index="5"></div>
       <div v-component="section4" index="4"></div>
@@ -55,7 +77,7 @@
   </script>
 
   <script id="template_hard_cover_section_3" type="text/x-template">
-        <div class="section section-3">
+    <div class="section section-3">
       <div class="background" style="background-image: url(images/hard-cover-section-3-background.jpg)"></div>
       <div v-component="stamp"></div>
       <div v-component="btn-return"></div>
@@ -108,6 +130,60 @@
     </div>
   </script>
 
+  <script id="template_soft_cover_section_1" type="text/x-template">
+    <div class="section section-1">
+      <div class="background" style="background-image: url(images/soft-cover-section-1-background.jpg)"></div>
+      <div v-component="stamp"></div>
+      <div v-component="btn-return"></div>
+      <img class="text-img" src="images/soft-cover-section-1-text.png">
+    </div>
+  </script>
+
+  <script id="template_soft_cover_section_2" type="text/x-template">
+    <div class="section section-2">
+      <div class="background" style="background-image: url(images/soft-cover-section-2-background.jpg)"></div>
+      <div v-component="stamp"></div>
+      <div v-component="btn-return"></div>
+      <img class="text-img" src="images/soft-cover-section-2-text.png">
+    </div>
+  </script>
+
+  <script id="template_soft_cover_section_3" type="text/x-template">
+    <div class="section section-3">
+      <div class="background" style="background-image: url(images/soft-cover-section-3-background.jpg)"></div>
+      <div v-component="stamp"></div>
+      <div v-component="btn-return"></div>
+      <img class="text-img" src="images/soft-cover-section-3-text.png">
+    </div>
+  </script>
+
+  <script id="template_soft_cover_section_4" type="text/x-template">
+    <div class="section section-4">
+      <div class="background" style="background-image: url(images/soft-cover-section-4-background.jpg)"></div>
+      <div v-component="stamp"></div>
+      <div v-component="btn-return"></div>
+      <img class="text-img" src="images/soft-cover-section-4-text.png">
+    </div>
+  </script>
+
+  <script id="template_soft_cover_section_5" type="text/x-template">
+    <div class="section section-5">
+      <div class="background" style="background-image: url(images/soft-cover-section-5-background.jpg)"></div>
+      <div v-component="stamp"></div>
+      <div v-component="btn-return"></div>
+      <img class="text-img" src="images/soft-cover-section-5-text.png">
+    </div>
+  </script>
+
+  <script id="template_soft_cover_section_6" type="text/x-template">
+    <div class="section section-6">
+      <div class="background" style="background-image: url(images/soft-cover-section-6-background.jpg)"></div>
+      <div v-component="stamp"></div>
+      <div v-component="btn-return"></div>
+      <img class="text-img" src="images/soft-cover-section-6-text.png">
+    </div>
+  </script>
+
   <script id="template_cover" type="text/x-template">
     <div class="section cover">
       <div class="background" style="background-image: url(images/cover-background.jpg)"></div>
@@ -128,16 +204,16 @@
         <a class="btn btn-make">立即制作</a>
       </div>
       <div class="bottom">
-        <a class="hard-cover" style="background-image: url(images/menu-hard-cover.jpg)">
+        <a v-on="'k.tap': open('hard_cover')" class="hard-cover" style="background-image: url(images/menu-hard-cover.jpg)">
           <span class="text">硬皮精装</span>
         </a>
-        <a class="soft-cover" style="background-image: url(images/menu-soft-cover.jpg)">
+        <a v-on="'k.tap': open('soft_cover')" class="soft-cover" style="background-image: url(images/menu-soft-cover.jpg)">
           <span class="text">软皮简装</span>
         </a>
-        <a class="make-step" style="background-image: url(images/menu-soft-cover.jpg)">
+        <a v-on="'k.tap': open('make_step')" class="make-step" style="background-image: url(images/menu-soft-cover.jpg)">
           <span class="text">制作步骤</span>
         </a>
-        <a class="price" style="background-image: url(images/menu-price.jpg)">
+        <a v-on="'k.tap': open('price')" class="price" style="background-image: url(images/menu-price.jpg)">
           <span class="text">产品价格</span>
         </a>
       </div>
@@ -145,15 +221,19 @@
   </script>
 
   <script id="template_section_button_return" type="text/x-template">
-    <span class="btn-return" v-on="click: returnToHome">返回</span>
+    <span v-activable class="btn-return" v-on="'k.tap': returnToHome">返回</span>
   </script>
 
   <script id="template_hard_cover_stamp" type="text/x-template">
     <img class="stamp" src="images/hard-cover-stamp.png">
   </script>
+  <script id="template_soft_cover_stamp" type="text/x-template">
+    <img class="stamp" src="images/soft-cover-stamp.png">
+  </script>
 
   <script src="scripts/lib/vue.min.js"></script>
   <script src="scripts/lib/velocity.min.js"></script>
+  <script src="scripts/lib/k-tap.js"></script>
   <script src="scripts/lib/k-drag.js"></script>
   <script src="scripts/app.js"></script>
 </body>

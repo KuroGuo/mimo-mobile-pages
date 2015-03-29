@@ -8,6 +8,7 @@ gulp.task('libs', function () {
   gulp.src([
       './bower_components/vue/dist/vue.min.js',
       './bower_components/velocity/velocity.min.js',
+      './bower_components/k-tap/dist/k-tap.js',
       './bower_components/k-drag/dist/k-drag.js'
     ])
     .pipe(gulp.dest('./dist/scripts/lib/'))

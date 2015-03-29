@@ -9,6 +9,7 @@
   top: 0;
   width: 100%;
   height: 100%;
+  overflow: hidden;
   @include backface-visibility(hidden);
 }
 
@@ -43,6 +44,11 @@
     border: 1px solid $mimo-red;
     border-radius: .50rem;
     font-size: .17rem;
+
+    &.active {
+      background-color: $mimo-red;
+      color: white;
+    }
   }
 
   .stamp {
@@ -62,6 +68,3 @@
     margin: auto;
   }
 }
-
-@import "./home.scss";
-@import "./hard-cover.scss";

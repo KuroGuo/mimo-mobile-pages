@@ -219,20 +219,19 @@ var SectionVue = Vue.extend({
         Velocity.hook(el, name, style[name])
       }
     }
-  },
+  }
+})
+
+var AppSectionVue = SectionVue.extend({
   components: {
     'btn-return': {
       template: '#template_section_button_return',
       replace: true,
       methods: {
         returnToHome: function () {
-          this.$dispatch('returnToHome')
+          this.$dispatch('open', 'home')
         }
       }
-    },
-    stamp: {
-      template: '#template_hard_cover_stamp',
-      replace: true
     }
   }
 })
@@ -275,45 +274,138 @@ var HomeSliderVue = SliderVue.extend({
         animationend: function () {
           this.$el.style.display = 'block'
         }
+      },
+      methods: {
+        open: function (name) {
+          this.$dispatch('open', name)
+        }
       }
     })
+  }
+})
+
+var HardCoverSectionVue = AppSectionVue.extend({
+  components: {
+    stamp: {
+      template: '#template_hard_cover_stamp',
+      replace: true
+    }
   }
 })
 
 var HardCoverSliderVue = SliderVue.extend({
   template: '#template_hard_cover',
   components: {
-    section1: SectionVue.extend({
+    section1: HardCoverSectionVue.extend({
       template: '#template_hard_cover_section_1'
     }),
-    section2: SectionVue.extend({
+    section2: HardCoverSectionVue.extend({
       template: '#template_hard_cover_section_2'
     }),
-    section3: SectionVue.extend({
+    section3: HardCoverSectionVue.extend({
       template: '#template_hard_cover_section_3'
     }),
-    section4: SectionVue.extend({
+    section4: HardCoverSectionVue.extend({
       template: '#template_hard_cover_section_4'
     }),
-    section5: SectionVue.extend({
+    section5: HardCoverSectionVue.extend({
       template: '#template_hard_cover_section_5'
     }),
-    section6: SectionVue.extend({
+    section6: HardCoverSectionVue.extend({
       template: '#template_hard_cover_section_6'
     }),
-    section7: SectionVue.extend({
+    section7: HardCoverSectionVue.extend({
       template: '#template_hard_cover_section_7'
     }),
-    section8: SectionVue.extend({
+    section8: HardCoverSectionVue.extend({
       template: '#template_hard_cover_section_8'
+    })
+  }
+})
+
+var SoftCoverSectionVue = AppSectionVue.extend({
+  components: {
+    stamp: {
+      template: '#template_soft_cover_stamp',
+      replace: true
+    }
+  }
+})
+
+var SoftCoverSliderVue = SliderVue.extend({
+  template: '#template_soft_cover',
+  components: {
+    section1: SoftCoverSectionVue.extend({
+      template: '#template_soft_cover_section_1'
+    }),
+    section2: SoftCoverSectionVue.extend({
+      template: '#template_soft_cover_section_2'
+    }),
+    section3: SoftCoverSectionVue.extend({
+      template: '#template_soft_cover_section_3'
+    }),
+    section4: SoftCoverSectionVue.extend({
+      template: '#template_soft_cover_section_4'
+    }),
+    section5: SoftCoverSectionVue.extend({
+      template: '#template_soft_cover_section_5'
+    }),
+    section6: SoftCoverSectionVue.extend({
+      template: '#template_soft_cover_section_6'
     })
   }
 })
 
 var app = new Vue({
   el: document.documentElement,
+  data: {
+    currentVue: 'home'
+  },
+  watch: {
+    currentVue: function () {
+      this.$broadcast('resize')
+    }
+  },
+  ready: function () {
+    var vue = this
+    var el = vue.$el
+
+    // var touchstartX, touchstartY
+
+    // el.addEventListener('touchstart', function (e) {
+    //   touchstartX
+    // })
+
+    // el.addEventListener('touchmove', function (e) {
+    //   console.log(e)
+    //   e.stopPropagation()
+    // }, true)
+  },
   components: {
     home: HomeSliderVue,
-    'hard-cover': HardCoverSliderVue
+    'hard-cover': HardCoverSliderVue,
+    'soft-cover': SoftCoverSliderVue
+  },
+  directives: {
+    activable: {
+      bind: function () {
+        var el = this.el
+
+        el.addEventListener('touchstart', function (e) {
+          var el = e.currentTarget
+          el.classList.add('active')
+        })
+
+        el.addEventListener('touchend', function (e) {
+          var el = e.currentTarget
+          el.classList.remove('active')
+        })
+      }
+    }
+  },
+  events: {
+    open: function (name) {
+      this.currentVue = name
+    }
   }
 })

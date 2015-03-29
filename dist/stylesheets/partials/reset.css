@@ -54,10 +54,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   display: block;
 }
 
-@font-face {
-  font-family: 'song';
-  src: url(../images/fonts/song.ttf) format("truetype");
-}
 html {
   font-size: 100px;
 }
