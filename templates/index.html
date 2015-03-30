@@ -18,7 +18,7 @@
 
       document.addEventListener('touchstart', function (e) {
         e.preventDefault()
-      }, true)
+      })
     })()
   </script>
 </head>
@@ -39,6 +39,7 @@
         <img class="text-title" src="images/cover-text-title.png">
         <img class="text-content" src="images/cover-text-content.png">
       </div>
+      <span class="scroll-hint"></span>
     </div>
   </script>
 
@@ -49,7 +50,7 @@
         <p>自动排版，10分钟成书！</p>
         <p>独家硬皮精装与六色高清印刷工艺！</p>
         <p>多印有优惠，低至 0.8元/页！</p>
-        <a class="btn btn-make">立即制作</a>
+        <a class="btn btn-make" v-on="k.tap: showQRCode = true" v-activable>立即制作</a>
       </div>
       <div class="bottom">
         <a v-on="'k.tap': open('hard_cover')" class="hard-cover" style="background-image: url(images/menu-hard-cover.jpg)">
@@ -58,12 +59,17 @@
         <a v-on="'k.tap': open('soft_cover')" class="soft-cover" style="background-image: url(images/menu-soft-cover.jpg)">
           <span class="text">软皮简装</span>
         </a>
-        <a v-on="'k.tap': open('make_step')" class="make-step" style="background-image: url(images/menu-soft-cover.jpg)">
+        <a v-on="'k.tap': open('make_step')" class="make-step" style="background-image: url(images/menu-make-step.jpg)">
           <span class="text">制作步骤</span>
         </a>
         <a v-on="'k.tap': open('price')" class="price" style="background-image: url(images/menu-price.jpg)">
           <span class="text">产品价格</span>
         </a>
+      </div>
+      <div class="rq-code" v-show="showQRCode" v-transition="fade">
+        <span class="btn-close" v-activable v-on="k.tap: showQRCode = false"></span>
+        <img src="http://beta.mimoprint.com/WechatApi/getMimoQR" width="430" height="430" v-on="touchstart: stopPropagation">
+        <p>长按二维码识别</p>
       </div>
     </div>
   </script>

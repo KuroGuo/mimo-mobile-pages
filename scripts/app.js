@@ -11,12 +11,10 @@ var SliderVue = Vue.extend({
     var vue = this
     var el = vue.$el
 
-    vue.$broadcast('ready')
-
     kDrag.bind(el)
 
-    el.addEventListener('touchstart', function (e) {
-      vue.onTouchstart(e)
+    el.addEventListener('touchstart', function () {
+      vue.onTouchstart()
     })
     el.addEventListener('k.drag', function (e) {
       vue.onDrag(e)
@@ -24,8 +22,8 @@ var SliderVue = Vue.extend({
     el.addEventListener('k.dragend', function (e) {
       vue.onDragend(e)
     })
-    el.addEventListener('touchend', function (e) {
-      vue.onTouchend(e)
+    el.addEventListener('touchend', function () {
+      vue.onTouchend()
     })
 
     vue.resize()
@@ -65,7 +63,7 @@ var SliderVue = Vue.extend({
     }
   },
   methods: {
-    onTouchstart: function (e) {
+    onTouchstart: function () {
       var vue = this
       vue.v = 0
       vue.$broadcast('stopAnimation')
@@ -85,13 +83,13 @@ var SliderVue = Vue.extend({
     onDragend: function (e) {
       this.v = e.vy
     },
-    onTouchend: function (e) {
+    onTouchend: function () {
       var v = this.v
       var absV = Math.abs(v)
 
       var duration
 
-      if (Math.abs(absV) > 0.5) {
+      if (Math.abs(absV) > 0.382) {
         duration = Math.max(400 / absV, 260)
         if (v > 0)
           this.$broadcast('scrollByIndex', this.current, duration)
@@ -166,6 +164,7 @@ var SectionVue = Vue.extend({
 
       if (duration === 0) {
         vue.setStyle(style)
+        vue.scrollTop = scrollTop
       } else {
         Velocity(el, style, {
           duration: duration,
@@ -223,16 +222,19 @@ var SectionVue = Vue.extend({
   }
 })
 
-var AppSectionVue = SectionVue.extend({
-  components: {
-    'btn-return': {
-      template: '#template_section_button_return',
-      replace: true,
-      methods: {
-        returnToHome: function () {
-          this.$dispatch('open', 'index')
-        }
-      }
+var SectionMenuVue = SectionVue.extend({
+  template: '#template_menu',
+  data: function () {
+    return {
+      showQRCode: false
+    }
+  },
+  methods: {
+    open: function (name) {
+      this.$dispatch('open', name)
+    },
+    stopPropagation: function (e) {
+      e.stopPropagation()
     }
   }
 })
@@ -284,19 +286,13 @@ var HomeSliderVue = SliderVue.extend({
         }
       }
     }),
-    menu: SectionVue.extend({
-      template: '#template_menu',
+    menu: SectionMenuVue.extend({
       ready: function () {
         this.$el.style.display = 'none'
       },
       events: {
         unlock: function () {
           this.$el.style.display = 'block'
-        }
-      },
-      methods: {
-        open: function (name) {
-          this.$dispatch('open', name)
         }
       },
       watch: {
@@ -306,6 +302,20 @@ var HomeSliderVue = SliderVue.extend({
         }
       }
     })
+  }
+})
+
+var AppSectionVue = SectionVue.extend({
+  components: {
+    'btn-return': {
+      template: '#template_section_button_return',
+      replace: true,
+      methods: {
+        returnToHome: function () {
+          this.$dispatch('open', 'index')
+        }
+      }
+    }
   }
 })
 
@@ -344,7 +354,8 @@ var HardCoverSliderVue = SliderVue.extend({
     }),
     section8: HardCoverSectionVue.extend({
       template: '#template_hard_cover_section_8'
-    })
+    }),
+    menu: SectionMenuVue
   }
 })
 
@@ -377,7 +388,33 @@ var SoftCoverSliderVue = SliderVue.extend({
     }),
     section6: SoftCoverSectionVue.extend({
       template: '#template_soft_cover_section_6'
-    })
+    }),
+    section7: SoftCoverSectionVue.extend({
+      template: '#template_soft_cover_section_7'
+    }),
+    menu: SectionMenuVue
+  }
+})
+
+var MakeStepSectionVue = AppSectionVue.extend({
+  components: {
+    stamp: {
+      template: '#template_make_step_stamp',
+      replace: true
+    }
+  }
+})
+
+var MakeStepSliderVue = SliderVue.extend({
+  template: '#template_make_step',
+  components: {
+    section1: MakeStepSectionVue.extend({
+      template: '#template_make_step_section_1'
+    }),
+    section4: MakeStepSectionVue.extend({
+      template: '#template_make_step_section_4'
+    }),
+    menu: SectionMenuVue
   }
 })
 
@@ -390,7 +427,8 @@ var app = new Vue({
   components: {
     home: HomeSliderVue,
     'hard-cover': HardCoverSliderVue,
-    'soft-cover': SoftCoverSliderVue
+    'soft-cover': SoftCoverSliderVue,
+    'make-step': MakeStepSliderVue
   },
   directives: {
     activable: {

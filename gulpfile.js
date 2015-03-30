@@ -2,7 +2,7 @@ var gulp = require('gulp')
 
 var uglify = require('gulp-uglify')
 var compass = require('gulp-compass')
-var minifyCss = require('gulp-minify-css')
+var minifyCSS = require('gulp-minify-css')
 
 gulp.task('libs', function () {
   gulp.src([

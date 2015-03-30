@@ -52,76 +52,28 @@
   -webkit-animation: fade-in 0.6s 2.4s both;
   animation: fade-in 0.6s 2.4s both;
 }
-
-.menu {
-  text-align: center;
-  background-color: #f6f4eb;
-}
-.menu .top {
+.cover .scroll-hint {
   position: absolute;
+  width: 10px;
+  height: 10px;
   left: 0;
   right: 0;
-  top: 8%;
-  height: 35%;
-}
-.menu .top h2 > span {
-  font-size: .40rem;
-  padding: 0 0 .10rem 0;
-  color: #8c2c31;
-  border-bottom: 1px solid #8c2c31;
-  display: inline-block;
-}
-.menu .top p {
-  margin: 1.6em 0;
-}
-.menu .top .btn-make {
-  display: inline-block;
-  padding: 1em 0;
-  width: 62%;
-  background-color: #8c2c31;
-  color: white;
-  border-radius: .4em;
-}
-.menu .bottom {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 8%;
-  height: 35%;
-}
-.menu .bottom > * {
-  position: absolute;
-  width: 50%;
-  height: 50%;
-  background-repeat: no-repeat;
-  background-position: center bottom;
-  background-size: cover;
-}
-.menu .bottom > * > .text {
-  position: absolute;
-  background-color: rgba(255, 255, 255, 0.6);
-  color: #8c2c31;
-  padding: .6em 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  text-align: center;
-}
-.menu .bottom .hard-cover {
-  left: 0;
-  top: 0;
-}
-.menu .bottom .soft-cover {
-  right: 0;
-  top: 0;
-}
-.menu .bottom .make-step {
-  left: 0;
-  bottom: 0;
-}
-.menu .bottom .price {
-  right: 0;
-  bottom: 0;
+  bottom: .18rem;
+  margin: auto;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  border-top: 0 solid black;
+  border-right: 0 solid black;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  -moz-animation: fade-in 0.4s 4s both;
+  -webkit-animation: fade-in 0.4s 4s both;
+  animation: fade-in 0.4s 4s both;
 }
 
 @-moz-keyframes cover-text-to-top {

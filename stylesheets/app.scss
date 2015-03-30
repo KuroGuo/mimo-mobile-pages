@@ -10,7 +10,6 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  @include backface-visibility(hidden);
 }
 
 .section {
@@ -36,9 +35,9 @@
 
   .btn-return {
     position: absolute;
-    right: .20rem;
-    top: .20rem;
-    padding: .12rem .30rem;
+    right: .12rem;
+    top: .12rem;
+    padding: .10rem .26rem;
     background-color: #f2e2dd;
     color: $mimo-red;
     border: 1px solid $mimo-red;
@@ -55,16 +54,166 @@
     position: absolute;
     left: 0;
     top: 0;
-    width: 38.2%;
+    width: 30%;
   }
 
   .text-img {
     position: absolute;
     left: 0;
     right: 0;
-    top: 1.1rem;
-    max-width: 70%;
-    max-height: 38.2%;
+    top: 15%;
+    max-width: 80%;
     margin: auto;
+  }
+}
+
+.menu {
+  text-align: center;
+  background-color: #f6f4eb;
+
+  .top {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 8%;
+    height: 35%;
+
+    h2 {
+      > span {
+        font-size: .40rem;
+        padding: 0 0 .10rem 0;
+        color: $mimo-red;
+        border-bottom: 1px solid $mimo-red;
+        display: inline-block;
+      }
+    }
+
+    p {
+      margin: 1.6em 0;
+    }
+
+    .btn-make {
+      display: inline-block;
+      padding: 1em 0;
+      width: 62%;
+      background-color: $mimo-red;
+      color: white;
+      border-radius: .4em;
+
+      &.active {
+        background-color: #a45;
+      }
+    }
+  }
+
+  .bottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 8%;
+    height: 35%;
+
+    > * {
+      position: absolute;
+      width: 50%;
+      height: 50%;
+      background-repeat: no-repeat;
+      background-position: center bottom;
+      background-size: cover;
+
+      > .text {
+        position: absolute;
+        background-color: rgba(255, 255, 255, .6);
+        color: $mimo-red;
+        padding: .6em 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        text-align: center;
+      }
+    }
+
+    .hard-cover {
+      left: 0;
+      top: 0;
+    }
+    .soft-cover {
+      right: 0;
+      top: 0;
+    }
+    .make-step {
+      left: 0;
+      bottom: 0;
+    }
+    .price {
+      right: 0;
+      bottom: 0;
+    }
+  }
+
+  .rq-code {
+    position: absolute;
+    width: 70%;
+    left: 0;
+    right: 0;
+    top: 20%;
+    margin: auto;
+    background-color: white;
+    @include box-shadow(0 .1rem .6rem #666);
+    text-align: center;
+    padding-bottom: .2rem;
+
+    &.fade-enter {
+      @include animation(fade-in .2s both);
+    }
+    &.fade-leave {
+      @include animation(fade-out .2s both);
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      image-rendering: pixelated;
+    }
+
+    .btn-close {
+      position: absolute;
+      width: 38px;
+      height: 38px;
+      right: 0;
+      top: -38px;
+      background-color: white;
+      @include backface-visibility(hidden);
+
+      &:before, &:after {
+        position: absolute;
+        content: '';
+        width: 2px;
+        height: 61.8%;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-color: black;
+        margin: auto;
+        @include backface-visibility(hidden);
+      }
+
+      &:before {
+        @include transform(rotate(-45deg));
+      }
+
+      &:after {
+        @include transform(rotate(45deg));
+      }
+
+      &.active {
+        background-color: black;
+
+        &:before, &:after {
+          background-color: white;
+        }
+      }
+    }
   }
 }

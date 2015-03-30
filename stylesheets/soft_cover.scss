@@ -1,0 +1,45 @@
+#soft_cover {
+  .section-1 {
+    .text-img {
+      max-height: 40%;
+    }
+  }
+  .section-2 {
+    .text-img {
+      max-height: 30%;
+    }
+  }
+  .section-4 {
+    .img {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 3%;
+      margin: auto;
+      max-width: 80%;
+      max-height: 42%;
+    }
+  }
+  .section-6 {
+    .img {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 5%;
+      margin: auto;
+      max-width: 80%;
+      max-height: 40%;
+    }
+  }
+  .section-7 {
+    .img {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 3%;
+      margin: auto;
+      max-width: 80%;
+      max-height: 45%;
+    }
+  }
+}

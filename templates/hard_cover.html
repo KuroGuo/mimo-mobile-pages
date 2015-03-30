@@ -5,6 +5,7 @@
   <title>微信书</title>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
   <link rel="stylesheet" href="stylesheets/app.css">
+  <link rel="stylesheet" href="stylesheets/hard_cover.css">
   <script>
     (function () {
       var setFontSize = function () {
@@ -17,7 +18,7 @@
 
       document.addEventListener('touchstart', function (e) {
         e.preventDefault()
-      }, true)
+      })
     })()
   </script>
 </head>
@@ -26,6 +27,7 @@
 
   <script id="template_hard_cover" type="text/x-template">
     <div class="slider">
+      <div v-component="menu" index="9"></div>
       <div v-component="section8" index="8"></div>
       <div v-component="section7" index="7"></div>
       <div v-component="section6" index="6"></div>
@@ -93,18 +95,20 @@
 
   <script id="template_hard_cover_section_7" type="text/x-template">
     <div class="section section-7">
-      <div class="background" style="background-image: url(images/hard-cover-section-7-background.jpg)"></div>
+      <div class="background" style="background-color: #f6f4eb;"></div>
       <div v-component="stamp"></div>
       <div v-component="btn-return"></div>
+      <img class="img" src="images/hard-cover-section-7-image.jpg">
       <img class="text-img" src="images/hard-cover-section-7-text.png">
     </div>
   </script>
 
   <script id="template_hard_cover_section_8" type="text/x-template">
     <div class="section section-8">
-      <div class="background" style="background-image: url(images/hard-cover-section-8-background.jpg)"></div>
+      <div class="background" style="background-color: #f6f4eb;"></div>
       <div v-component="stamp"></div>
       <div v-component="btn-return"></div>
+      <img class="img" src="images/hard-cover-section-8-image.jpg">
       <img class="text-img" src="images/hard-cover-section-8-text.png">
     </div>
   </script>
@@ -115,6 +119,37 @@
 
   <script id="template_hard_cover_stamp" type="text/x-template">
     <img class="stamp" src="images/hard-cover-stamp.png">
+  </script>
+
+  <script id="template_menu" type="text/x-template">
+    <div class="section menu">
+      <div class="top">
+        <h2><span>米莫印品·微信书</span></h2>
+        <p>自动排版，10分钟成书！</p>
+        <p>独家硬皮精装与六色高清印刷工艺！</p>
+        <p>多印有优惠，低至 0.8元/页！</p>
+        <a class="btn btn-make" v-on="k.tap: showQRCode = true" v-activable>立即制作</a>
+      </div>
+      <div class="bottom">
+        <a v-on="'k.tap': open('hard_cover')" class="hard-cover" style="background-image: url(images/menu-hard-cover.jpg)">
+          <span class="text">硬皮精装</span>
+        </a>
+        <a v-on="'k.tap': open('soft_cover')" class="soft-cover" style="background-image: url(images/menu-soft-cover.jpg)">
+          <span class="text">软皮简装</span>
+        </a>
+        <a v-on="'k.tap': open('make_step')" class="make-step" style="background-image: url(images/menu-make-step.jpg)">
+          <span class="text">制作步骤</span>
+        </a>
+        <a v-on="'k.tap': open('price')" class="price" style="background-image: url(images/menu-price.jpg)">
+          <span class="text">产品价格</span>
+        </a>
+      </div>
+      <div class="rq-code" v-show="showQRCode" v-transition="fade">
+        <span class="btn-close" v-activable v-on="k.tap: showQRCode = false"></span>
+        <img src="http://beta.mimoprint.com/WechatApi/getMimoQR" width="430" height="430" v-on="touchstart: stopPropagation">
+        <p>长按二维码识别</p>
+      </div>
+    </div>
   </script>
 
   <script src="scripts/lib/vue.min.js"></script>

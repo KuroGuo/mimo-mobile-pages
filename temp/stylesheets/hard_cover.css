@@ -1,0 +1,27 @@
+#hard_cover .section-1 .text-img {
+  max-height: 41%;
+}
+#hard_cover .section-4 .text-img {
+  max-height: 26%;
+}
+#hard_cover .section-5 .text-img {
+  max-height: 37%;
+}
+#hard_cover .section-7 .img {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 5%;
+  margin: auto;
+  max-width: 80%;
+  max-height: 40%;
+}
+#hard_cover .section-8 .img {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 3%;
+  margin: auto;
+  max-width: 80%;
+  max-height: 45%;
+}
