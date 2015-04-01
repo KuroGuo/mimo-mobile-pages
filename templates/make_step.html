@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>微信书</title>
+  <title>朋友圈一键印成书，米莫微信书上线啦！</title>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
   <link rel="stylesheet" href="stylesheets/app.css">
   <link rel="stylesheet" href="stylesheets/make_step.css">
@@ -23,28 +23,54 @@
   </script>
 </head>
 <body>
+  <div style="display: none;">
+    <img src="images/logo.jpg">
+  </div>
+
   <div id="make_step" v-component="make-step"></div>
 
   <script id="template_make_step" type="text/x-template">
     <div class="slider">
-      <div v-component="menu" index="3"></div>
-      <div v-component="section4" index="2"></div>
+      <div v-component="menu" index="5"></div>
+      <div v-component="section4" index="4"></div>
+      <div v-component="section3" index="3"></div>
+      <div v-component="section2" index="2"></div>
       <div v-component="section1" index="1"></div>
     </div>
   </script>
 
   <script id="template_make_step_section_1" type="text/x-template">
     <div class="section section-1">
-      <div class="background" style="background-image: url(images/make-step-section-1-background.jpg)"></div>
+      <div class="background" style="background-image: url(images/make-step-section-1-background.jpg);"></div>
       <div v-component="stamp"></div>
       <div v-component="btn-return"></div>
       <img class="text-img" src="images/make-step-section-1-text.png">
     </div>
   </script>
 
+  <script id="template_make_step_section_2" type="text/x-template">
+    <div class="section section-2">
+      <div class="background" style="background-image: url(images/make-step-section-2-background.jpg);"></div>
+      <div v-component="stamp"></div>
+      <div v-component="btn-return"></div>
+      <img class="img" src="images/make-step-section-2-image.jpg">
+      <img class="text-img" src="images/make-step-section-2-text.png">
+    </div>
+  </script>
+
+  <script id="template_make_step_section_3" type="text/x-template">
+    <div class="section section-3">
+      <div class="background" style="background-color: #f6f4eb;"></div>
+      <div v-component="stamp"></div>
+      <div v-component="btn-return"></div>
+      <img class="img" src="images/make-step-section-3-image.png?v=2">
+      <img class="text-img" src="images/make-step-section-3-text.jpg">
+    </div>
+  </script>
+
   <script id="template_make_step_section_4" type="text/x-template">
     <div class="section section-4">
-      <div class="background" style="background-image: url(images/make-step-section-4-background.jpg)"></div>
+      <div class="background" style="background-image: url(images/make-step-section-4-background.jpg);"></div>
       <div v-component="stamp"></div>
       <div v-component="btn-return"></div>
       <img class="text-img" src="images/make-step-section-4-text.png">

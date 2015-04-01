@@ -1,3 +1,24 @@
 #make_step .section-1 .text-img {
-  max-height: 34%;
+  max-height: 33%;
+}
+#make_step .section-2 .img {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 8%;
+  margin: auto;
+  max-width: 80%;
+  max-height: 40%;
+}
+#make_step .section-3 .text-img {
+  max-height: 44%;
+}
+#make_step .section-3 .img {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 3%;
+  margin: auto;
+  max-width: 90%;
+  max-height: 37%;
 }

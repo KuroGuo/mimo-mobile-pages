@@ -1,0 +1,12 @@
+#price .section-1 .text-img {
+  max-height: 44%;
+}
+#price .section-1 .img {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 3%;
+  margin: auto;
+  max-width: 90%;
+  max-height: 37%;
+}

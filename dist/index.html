@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>微信书</title>
+  <title>朋友圈一键印成书，米莫微信书上线啦！</title>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
   <link rel="stylesheet" href="stylesheets/app.css">
   <link rel="stylesheet" href="stylesheets/home.css">
@@ -23,6 +23,10 @@
   </script>
 </head>
 <body>
+  <div style="display: none;">
+    <img src="images/logo.jpg">
+  </div>
+
   <div id="home" v-component="home"></div>
 
   <script id="template_home" type="text/x-template">
@@ -34,7 +38,7 @@
 
   <script id="template_cover" type="text/x-template">
     <div class="section cover">
-      <div class="background" style="background-image: url(images/cover-background.jpg)"></div>
+      <div class="background" style="background-image: url(images/cover-background.jpg);"></div>
       <div class="text">
         <img class="text-title" src="images/cover-text-title.png">
         <img class="text-content" src="images/cover-text-content.png">
@@ -53,16 +57,16 @@
         <a class="btn btn-make" v-on="k.tap: showQRCode = true" v-activable>立即制作</a>
       </div>
       <div class="bottom">
-        <a v-on="'k.tap': open('hard_cover')" class="hard-cover" style="background-image: url(images/menu-hard-cover.jpg)">
+        <a v-on="'k.tap': open('hard_cover')" class="hard-cover" style="background-image: url(images/menu-hard-cover.jpg);">
           <span class="text">硬皮精装</span>
         </a>
-        <a v-on="'k.tap': open('soft_cover')" class="soft-cover" style="background-image: url(images/menu-soft-cover.jpg)">
+        <a v-on="'k.tap': open('soft_cover')" class="soft-cover" style="background-image: url(images/menu-soft-cover.jpg);">
           <span class="text">软皮简装</span>
         </a>
-        <a v-on="'k.tap': open('make_step')" class="make-step" style="background-image: url(images/menu-make-step.jpg)">
+        <a v-on="'k.tap': open('make_step')" class="make-step" style="background-image: url(images/menu-make-step.jpg);">
           <span class="text">制作步骤</span>
         </a>
-        <a v-on="'k.tap': open('price')" class="price" style="background-image: url(images/menu-price.jpg)">
+        <a v-on="'k.tap': open('price')" class="price" style="background-image: url(images/menu-price.jpg);">
           <span class="text">产品价格</span>
         </a>
       </div>

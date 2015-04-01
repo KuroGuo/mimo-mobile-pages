@@ -411,8 +411,33 @@ var MakeStepSliderVue = SliderVue.extend({
     section1: MakeStepSectionVue.extend({
       template: '#template_make_step_section_1'
     }),
+    section2: MakeStepSectionVue.extend({
+      template: '#template_make_step_section_2'
+    }),
+    section3: MakeStepSectionVue.extend({
+      template: '#template_make_step_section_3'
+    }),
     section4: MakeStepSectionVue.extend({
       template: '#template_make_step_section_4'
+    }),
+    menu: SectionMenuVue
+  }
+})
+
+var PriceSectionVue = AppSectionVue.extend({
+  components: {
+    stamp: {
+      template: '#template_price_stamp',
+      replace: true
+    }
+  }
+})
+
+var PriceSliderVue = SliderVue.extend({
+  template: '#template_price',
+  components: {
+    section1: PriceSectionVue.extend({
+      template: '#template_price_section_1'
     }),
     menu: SectionMenuVue
   }
@@ -428,7 +453,8 @@ var app = new Vue({
     home: HomeSliderVue,
     'hard-cover': HardCoverSliderVue,
     'soft-cover': SoftCoverSliderVue,
-    'make-step': MakeStepSliderVue
+    'make-step': MakeStepSliderVue,
+    price: PriceSliderVue
   },
   directives: {
     activable: {
@@ -450,8 +476,10 @@ var app = new Vue({
   events: {
     open: function (name) {
       var location = './' + name + '.html'
+
       if (name === 'index')
         location += '#menu'
+
       window.location = location
     }
   }
