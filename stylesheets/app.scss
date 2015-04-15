@@ -110,44 +110,52 @@
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 8%;
-    height: 35%;
+    bottom: 6%;
+    height: 37%;
 
-    > * {
+    .links {
       position: absolute;
-      width: 50%;
-      height: 50%;
-      background-repeat: no-repeat;
-      background-position: center bottom;
-      background-size: cover;
+      left: 0;
+      right: 0;
+      top: 2em;
+      bottom: 0;
 
-      > .text {
+      > a {
         position: absolute;
-        background-color: rgba(255, 255, 255, .6);
-        color: $mimo-red;
-        padding: .6em 0;
+        width: 50%;
+        height: 50%;
+        background-repeat: no-repeat;
+        background-position: center bottom;
+        background-size: cover;
+
+        > .text {
+          position: absolute;
+          background-color: rgba(255, 255, 255, .6);
+          color: $mimo-red;
+          padding: .6em 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          text-align: center;
+        }
+      }
+
+      .hard-cover {
         left: 0;
+        top: 0;
+      }
+      .soft-cover {
+        right: 0;
+        top: 0;
+      }
+      .make-step {
+        left: 0;
+        bottom: 0;
+      }
+      .price {
         right: 0;
         bottom: 0;
-        text-align: center;
       }
-    }
-
-    .hard-cover {
-      left: 0;
-      top: 0;
-    }
-    .soft-cover {
-      right: 0;
-      top: 0;
-    }
-    .make-step {
-      left: 0;
-      bottom: 0;
-    }
-    .price {
-      right: 0;
-      bottom: 0;
     }
   }
 

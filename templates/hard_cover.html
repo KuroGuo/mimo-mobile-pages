@@ -135,18 +135,21 @@
         <a class="btn btn-make" v-on="k.tap: showQRCode = true" v-activable>立即制作</a>
       </div>
       <div class="bottom">
-        <a v-on="'k.tap': open('hard_cover')" class="hard-cover" style="background-image: url(images/menu-hard-cover.jpg);">
-          <span class="text">硬皮精装</span>
-        </a>
-        <a v-on="'k.tap': open('soft_cover')" class="soft-cover" style="background-image: url(images/menu-soft-cover.jpg);">
-          <span class="text">软皮简装</span>
-        </a>
-        <a v-on="'k.tap': open('make_step')" class="make-step" style="background-image: url(images/menu-make-step.jpg);">
-          <span class="text">制作步骤</span>
-        </a>
-        <a v-on="'k.tap': open('price')" class="price" style="background-image: url(images/menu-price.jpg);">
-          <span class="text">产品价格</span>
-        </a>
+        <p>点击下方查看介绍</p>
+        <div class="links">
+          <a v-on="'k.tap': open('hard_cover')" class="hard-cover" style="background-image: url(images/menu-hard-cover.jpg);">
+            <span class="text">硬皮精装</span>
+          </a>
+          <a v-on="'k.tap': open('soft_cover')" class="soft-cover" style="background-image: url(images/menu-soft-cover.jpg);">
+            <span class="text">软皮简装</span>
+          </a>
+          <a v-on="'k.tap': open('make_step')" class="make-step" style="background-image: url(images/menu-make-step.jpg);">
+            <span class="text">制作步骤</span>
+          </a>
+          <a v-on="'k.tap': open('price')" class="price" style="background-image: url(images/menu-price.jpg);">
+            <span class="text">产品价格</span>
+          </a>
+        </div>
       </div>
       <div class="rq-code" v-show="showQRCode" v-transition="fade">
         <span class="btn-close" v-activable v-on="k.tap: showQRCode = false"></span>
