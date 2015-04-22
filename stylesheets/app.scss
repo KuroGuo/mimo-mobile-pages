@@ -116,6 +116,7 @@
     .arrow {
       height: 2em;
       width: auto;
+      display: inline-block;
       @include animation(from-top .4s infinite alternate both);
     }
     .arrow img {

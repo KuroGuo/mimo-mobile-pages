@@ -269,6 +269,7 @@ img {
 .menu .bottom .arrow {
   height: 2em;
   width: auto;
+  display: inline-block;
   -moz-animation: from-top 0.4s infinite alternate both;
   -webkit-animation: from-top 0.4s infinite alternate both;
   animation: from-top 0.4s infinite alternate both;
