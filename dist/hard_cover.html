@@ -135,7 +135,7 @@
         <a class="btn btn-make" v-on="k.tap: showQRCode = true" v-activable>立即制作</a>
       </div>
       <div class="bottom">
-        <p>点击下方查看介绍</p>
+        <p><span class="arrow arrow-left"><img src="images/arrow.png"></span> 点击下方查看介绍 <span class="arrow arrow-right"><img src="images/arrow.png"></span></p>
         <div class="links">
           <a v-on="'k.tap': open('hard_cover')" class="hard-cover" style="background-image: url(images/menu-hard-cover.jpg);">
             <span class="text">硬皮精装</span>
@@ -153,8 +153,13 @@
       </div>
       <div class="rq-code" v-show="showQRCode" v-transition="fade">
         <span class="btn-close" v-activable v-on="k.tap: showQRCode = false"></span>
-        <img src="http://beta.mimoprint.com/WechatApi/getMimoQR" width="430" height="430" v-on="touchstart: stopPropagation">
-        <p>长按二维码识别</p>
+        <div v-show="isWechat">
+          <img src="http://beta.mimoprint.com/WechatApi/getMimoQR" width="430" height="430" v-on="touchstart: stopPropagation">
+          <p>长按二维码识别</p>
+        </div>
+        <div class="not-wechat" v-show="!isWechat" v-on="touchstart: stopPropagation">
+          <p>请在微信中搜索「<strong>mimoprint</strong>」<br>关注米莫公众号<br>点「微信书」进行定制</p>
+        </div>
       </div>
     </div>
   </script>
@@ -163,6 +168,6 @@
   <script src="scripts/lib/velocity.min.js"></script>
   <script src="scripts/lib/k-tap.js"></script>
   <script src="scripts/lib/k-drag.js"></script>
-  <script src="scripts/app.js"></script>
+  <script src="scripts/app.js?v=2"></script>
 </body>
 </html>

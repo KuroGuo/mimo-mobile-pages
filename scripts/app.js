@@ -226,7 +226,8 @@ var SectionMenuVue = SectionVue.extend({
   template: '#template_menu',
   data: function () {
     return {
-      showQRCode: false
+      showQRCode: false,
+      isWechat: navigator.userAgent.indexOf('MicroMessenger') >= 0
     }
   },
   methods: {

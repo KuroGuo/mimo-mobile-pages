@@ -110,14 +110,39 @@
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 6%;
+    bottom: 7%;
     height: 37%;
+
+    .arrow {
+      height: 2em;
+      width: auto;
+      @include animation(from-top .4s infinite alternate both);
+    }
+    .arrow img {
+      height: 2em;
+      vertical-align: middle;
+    }
+
+    .arrow-left {
+      margin-right: 2em;
+    }
+    .arrow-left img {
+      -webkit-transform: rotate(180deg) rotateY(180deg);
+              transform: rotate(180deg) rotateY(180deg);
+    }
+    .arrow-right {
+      margin-left: 2em;
+    }
+    .arrow-right img {
+      -webkit-transform: rotate(180deg);
+              transform: rotate(180deg);
+    }
 
     .links {
       position: absolute;
       left: 0;
       right: 0;
-      top: 2em;
+      top: 3em;
       bottom: 0;
 
       > a {
@@ -221,6 +246,16 @@
         &:before, &:after {
           background-color: white;
         }
+      }
+    }
+
+    .not-wechat {
+      padding: 1em 1em 0 1em;
+      font-size: 16px;
+      line-height: 3em;
+
+      strong {
+        font-weight: bold;
       }
     }
   }

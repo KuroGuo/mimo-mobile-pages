@@ -263,14 +263,39 @@ img {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 6%;
+  bottom: 7%;
   height: 37%;
+}
+.menu .bottom .arrow {
+  height: 2em;
+  width: auto;
+  -moz-animation: from-top 0.4s infinite alternate both;
+  -webkit-animation: from-top 0.4s infinite alternate both;
+  animation: from-top 0.4s infinite alternate both;
+}
+.menu .bottom .arrow img {
+  height: 2em;
+  vertical-align: middle;
+}
+.menu .bottom .arrow-left {
+  margin-right: 2em;
+}
+.menu .bottom .arrow-left img {
+  -webkit-transform: rotate(180deg) rotateY(180deg);
+  transform: rotate(180deg) rotateY(180deg);
+}
+.menu .bottom .arrow-right {
+  margin-left: 2em;
+}
+.menu .bottom .arrow-right img {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 .menu .bottom .links {
   position: absolute;
   left: 0;
   right: 0;
-  top: 2em;
+  top: 3em;
   bottom: 0;
 }
 .menu .bottom .links > a {
@@ -379,4 +404,12 @@ img {
 }
 .menu .rq-code .btn-close.active:before, .menu .rq-code .btn-close.active:after {
   background-color: white;
+}
+.menu .rq-code .not-wechat {
+  padding: 1em 1em 0 1em;
+  font-size: 16px;
+  line-height: 3em;
+}
+.menu .rq-code .not-wechat strong {
+  font-weight: bold;
 }
