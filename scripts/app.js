@@ -1,10 +1,41 @@
 var SliderVue = Vue.extend({
   data: function () {
+    var params = location.search.substring(1).split('&').map(function (exp) {
+      var match = exp.match('^(.+?)=(.*)$')
+
+      if (!match)
+        return null
+
+      return { 
+        key: match[1],
+        value: match[2]
+      }
+    })
+
+    var channelId = params.filter(function (param) {
+      if (!param)
+        return false
+      return param.key === 'channel_id'
+    })[0]
+
+    var campaignId = params.filter(function (param) {
+      if (!param)
+        return false
+      return param.key === 'campaign_id'
+    })[0]
+
+    if (channelId)
+      window.localStorage['channel_id'] = channelId.value
+    if (campaignId)
+      window.localStorage['campaign_id'] = campaignId.value
+
     return {
       scrollTop: 0,
       height: 0,
       v: 0,
-      count: 0
+      count: 0,
+      channelId: window.localStorage['channel_id'],
+      campaignId: window.localStorage['campaign_id']
     }
   },
   ready: function () {
