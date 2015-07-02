@@ -4,7 +4,7 @@
 .cover {
   .background {
     @include backface-visibility(hidden);
-    @include animation(fade-in 1s 3s both);
+    opacity: 0;
   }
 
   .text {
@@ -19,7 +19,7 @@
     -ms-transform-origin: center top;
     transform-origin: center top;
     @include backface-visibility(hidden);
-    @include animation(cover-text-to-top .6s 1.2s both);
+    opacity: 0;
 
     .text-title, .text-content {
       position: absolute;
@@ -32,31 +32,68 @@
 
     .text-title {
       @include backface-visibility(hidden);
-      @include animation(fade-in 1s both, cover-text-title-to-right .6s 1.8s both);
+      opacity: 0;
     }
 
     .text-content {
       @include backface-visibility(hidden);
       @include transform(translateX(-38%));
-      @include animation(fade-in .6s 2.4s both);
+      opacity: 0;
     }
   }
 
-  .scroll-hint {
+  .scroll-hint-wrapper {
     position: absolute;
-    width: 10px;
-    height: 10px;
+    padding: .1rem;
     left: 0;
     right: 0;
-    bottom: .18rem;
+    width: 15px;
+    bottom: .08rem;
     margin: auto;
-    border-left: 1px solid black;
-    border-bottom: 1px solid black;
-    border-top: 0 solid black;
-    border-right: 0 solid black;
-    @include backface-visibility(hidden);
-    @include transform(rotate(-45deg));
-    @include animation(fade-in .4s 4s both);
+    text-align: center;
+
+    .scroll-hint {
+      width: 10px;
+      height: 10px;
+      display: inline-block;
+      border-left: 1px solid black;
+      border-bottom: 1px solid black;
+      border-top: 0 solid black;
+      border-right: 0 solid black;
+      @include backface-visibility(hidden);
+      @include transform(rotate(-45deg));
+      opacity: 0;
+    }
+  }
+
+  &.loaded {
+    .background {
+      opacity: 1;
+      @include animation(fade-in 1s 3s both);
+    }
+
+    .text {
+      opacity: 1;
+      @include animation(cover-text-to-top .6s 1.2s both);
+
+      .text-title {
+        opacity: 1;
+        @include backface-visibility(hidden);
+        @include animation(fade-in 1s both, cover-text-title-to-right .6s 1.8s both);
+      }
+
+      .text-content {
+        opacity: 1;
+        @include backface-visibility(hidden);
+        @include transform(translateX(-38%));
+        @include animation(fade-in .6s 2.4s both);
+      }
+    }
+
+    .scroll-hint {
+      opacity: 1;
+      @include animation(fade-in .4s 4s both);
+    }
   }
 }
 

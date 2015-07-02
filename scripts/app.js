@@ -6,7 +6,7 @@ var SliderVue = Vue.extend({
       if (!match)
         return null
 
-      return { 
+      return {
         key: match[1],
         value: match[2]
       }
@@ -24,18 +24,55 @@ var SliderVue = Vue.extend({
       return param.key === 'campaign_id'
     })[0]
 
+    var cookie = function (key, value, options) {
+      var days, time, result, decode
+
+      // A key and value were given. Set cookie.
+      if (arguments.length > 1 && String(value) !== "[object Object]") {
+        // Enforce object
+        options = options || {};
+
+        if (value === null || value === undefined) options.expires = -1
+
+        if (typeof options.expires === 'number') {
+          days = (options.expires * 24 * 60 * 60 * 1000)
+          time = options.expires = new Date()
+
+          time.setTime(time.getTime() + days)
+        }
+
+        value = String(value)
+
+        return (document.cookie = [
+          encodeURIComponent(key), '=',
+          options.raw ? value : encodeURIComponent(value),
+          options.expires ? '; expires=' + options.expires.toUTCString() : '',
+          options.path ? '; path=' + options.path : '',
+          options.domain ? '; domain=' + options.domain : '',
+          options.secure ? '; secure' : ''
+        ].join(''))
+      }
+
+      // Key and possibly options given, get cookie
+      options = value || {}
+
+      decode = options.raw ? function (s) { return s } : decodeURIComponent
+
+      return (result = new RegExp('(?:^|; )' + encodeURIComponent(key) + '=([^;]*)').exec(document.cookie)) ? decode(result[1]) : null
+    }
+
     if (channelId)
-      window.localStorage['channel_id'] = channelId.value
+      cookie('channel_id', channelId.value, { expires: 7 })
     if (campaignId)
-      window.localStorage['campaign_id'] = campaignId.value
+      cookie('campaign_id', campaignId.value, { expires: 7 })
 
     return {
       scrollTop: 0,
       height: 0,
       v: 0,
       count: 0,
-      channelId: window.localStorage['channel_id'],
-      campaignId: window.localStorage['campaign_id']
+      channelId: cookie('channel_id'),
+      campaignId: cookie('campaign_id')
     }
   },
   ready: function () {
@@ -139,6 +176,10 @@ var SliderVue = Vue.extend({
       var current = this.current
       this.height = this.$el.clientHeight
       this.scrollTop = this.height * (current - 1)
+    },
+    scrollBy: function (index, duration) {
+      if (duration === undefined) duration = 400
+      this.$broadcast('scrollByIndex', index, duration)
     }
   }
 })
@@ -172,8 +213,7 @@ var SectionVue = Vue.extend({
   },
   events: {
     scrollByIndex: function (index, duration) {
-      if (duration === undefined)
-        duration = 400
+      if (duration === undefined) duration = 400
 
       var vue = this
 
@@ -273,6 +313,11 @@ var SectionMenuVue = SectionVue.extend({
 
 var HomeSliderVue = SliderVue.extend({
   template: '#template_home',
+  data: function () {
+    return {
+      loaded: false
+    }
+  },
   ready: function () {
     var vue = this
     var el = vue.$el
@@ -294,6 +339,15 @@ var HomeSliderVue = SliderVue.extend({
   components: {
     cover: SectionVue.extend({
       template: '#template_cover',
+      compiled: function () {
+        var completeds = 0
+        this.$$.title.onload = this.$$.content.onload = function () {
+          completeds += 1
+          if (completeds === 2) this.loaded = true
+        }.bind(this)
+        this.$$.title.src = 'images/cover-text-title.png'
+        this.$$.content.src = 'images/cover-text-content.png'
+      },
       ready: function () {
         var vue = this
         var el = vue.$el
@@ -309,6 +363,9 @@ var HomeSliderVue = SliderVue.extend({
         preventTouch: function (e) {
           e.stopPropagation()
           e.preventDefault()
+        },
+        stopPropagation: function (e) {
+          e.stopPropagation()
         }
       },
       watch: {

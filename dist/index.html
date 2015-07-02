@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>朋友圈一键印成书，米莫微信书上线啦！</title>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-  <link rel="stylesheet" href="stylesheets/app.css?v=3">
+  <link rel="stylesheet" href="stylesheets/app.css?v=5">
   <link rel="stylesheet" href="stylesheets/home.css">
   <script>
     (function () {
@@ -32,7 +32,7 @@
   <script id="template_home" type="text/x-template">
     <div class="slider">
       <div v-component="menu" index="2"></div>
-      <div v-component="cover" index="1"></div>
+      <div v-component="cover" v-class="loaded: loaded" index="1"></div>
     </div>
   </script>
 
@@ -40,10 +40,12 @@
     <div class="section cover">
       <div class="background" style="background-image: url(images/cover-background.jpg);"></div>
       <div class="text">
-        <img class="text-title" src="images/cover-text-title.png">
-        <img class="text-content" src="images/cover-text-content.png">
+        <img class="text-title" v-el="title">
+        <img class="text-content" v-el="content">
       </div>
-      <span class="scroll-hint"></span>
+      <div class="scroll-hint-wrapper" v-on="k.tap: scrollBy(index + 1), touchstart: stopPropagation">
+        <span class="scroll-hint"></span>
+      </div>
     </div>
   </script>
 
@@ -92,7 +94,7 @@
   <script src="scripts/lib/velocity.min.js"></script>
   <script src="scripts/lib/k-tap.js"></script>
   <script src="scripts/lib/k-drag.js"></script>
-  <script src="scripts/app.js?v=3"></script>
+  <script src="scripts/app.js?v=5"></script>
 
   <!--google流量监测代码-->
   <script type="text/javascript">

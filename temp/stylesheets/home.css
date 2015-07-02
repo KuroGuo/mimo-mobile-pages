@@ -2,9 +2,7 @@
   -moz-backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  -moz-animation: fade-in 1s 3s both;
-  -webkit-animation: fade-in 1s 3s both;
-  animation: fade-in 1s 3s both;
+  opacity: 0;
 }
 .cover .text {
   position: absolute;
@@ -20,9 +18,7 @@
   -moz-backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  -moz-animation: cover-text-to-top 0.6s 1.2s both;
-  -webkit-animation: cover-text-to-top 0.6s 1.2s both;
-  animation: cover-text-to-top 0.6s 1.2s both;
+  opacity: 0;
 }
 .cover .text .text-title, .cover .text .text-content {
   position: absolute;
@@ -36,9 +32,7 @@
   -moz-backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  -moz-animation: fade-in 1s both, cover-text-title-to-right 0.6s 1.8s both;
-  -webkit-animation: fade-in 1s both, cover-text-title-to-right 0.6s 1.8s both;
-  animation: fade-in 1s both, cover-text-title-to-right 0.6s 1.8s both;
+  opacity: 0;
 }
 .cover .text .text-content {
   -moz-backface-visibility: hidden;
@@ -48,18 +42,22 @@
   -ms-transform: translateX(-38%);
   -webkit-transform: translateX(-38%);
   transform: translateX(-38%);
-  -moz-animation: fade-in 0.6s 2.4s both;
-  -webkit-animation: fade-in 0.6s 2.4s both;
-  animation: fade-in 0.6s 2.4s both;
+  opacity: 0;
 }
-.cover .scroll-hint {
+.cover .scroll-hint-wrapper {
   position: absolute;
-  width: 10px;
-  height: 10px;
+  padding: .1rem;
   left: 0;
   right: 0;
-  bottom: .18rem;
+  width: 15px;
+  bottom: .08rem;
   margin: auto;
+  text-align: center;
+}
+.cover .scroll-hint-wrapper .scroll-hint {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
   border-left: 1px solid black;
   border-bottom: 1px solid black;
   border-top: 0 solid black;
@@ -71,6 +69,44 @@
   -ms-transform: rotate(-45deg);
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg);
+  opacity: 0;
+}
+.cover.loaded .background {
+  opacity: 1;
+  -moz-animation: fade-in 1s 3s both;
+  -webkit-animation: fade-in 1s 3s both;
+  animation: fade-in 1s 3s both;
+}
+.cover.loaded .text {
+  opacity: 1;
+  -moz-animation: cover-text-to-top 0.6s 1.2s both;
+  -webkit-animation: cover-text-to-top 0.6s 1.2s both;
+  animation: cover-text-to-top 0.6s 1.2s both;
+}
+.cover.loaded .text .text-title {
+  opacity: 1;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-animation: fade-in 1s both, cover-text-title-to-right 0.6s 1.8s both;
+  -webkit-animation: fade-in 1s both, cover-text-title-to-right 0.6s 1.8s both;
+  animation: fade-in 1s both, cover-text-title-to-right 0.6s 1.8s both;
+}
+.cover.loaded .text .text-content {
+  opacity: 1;
+  -moz-backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -moz-transform: translateX(-38%);
+  -ms-transform: translateX(-38%);
+  -webkit-transform: translateX(-38%);
+  transform: translateX(-38%);
+  -moz-animation: fade-in 0.6s 2.4s both;
+  -webkit-animation: fade-in 0.6s 2.4s both;
+  animation: fade-in 0.6s 2.4s both;
+}
+.cover.loaded .scroll-hint {
+  opacity: 1;
   -moz-animation: fade-in 0.4s 4s both;
   -webkit-animation: fade-in 0.4s 4s both;
   animation: fade-in 0.4s 4s both;
